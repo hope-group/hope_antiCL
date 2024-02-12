@@ -1,3 +1,7 @@
+local Tunnel = module("vrp","lib/Tunnel")
+local Proxy = module("vrp","lib/Proxy")
+vRP = Proxy.getInterface("vRP")
+
 local show3DText = false
 
 RegisterNetEvent("hope_antiCL:show")
@@ -18,11 +22,11 @@ AddEventHandler("hope_antiCL:show", function()
 end)
 
 RegisterNetEvent("hope_anticl")
-AddEventHandler("hope_anticl", function(id, crds, identifier, reason)
-    Display(id, crds, identifier, reason)
+AddEventHandler("hope_anticl", function(id, crds, identifier, reason, user_id)
+    Display(id, crds, identifier, reason, user_id)
 end)
 
-function Display(id, crds, identifier, reason)
+function Display(id, crds, identifier, reason, user_id)
     local displaying = true
 
     Citizen.CreateThread(function()
@@ -36,7 +40,7 @@ function Display(id, crds, identifier, reason)
             local pcoords = GetEntityCoords(PlayerPedId())
             if GetDistanceBetweenCoords(crds.x, crds.y, crds.z, pcoords.x, pcoords.y, pcoords.z, true) < 15.0 and show3DText then
                 DrawText3DSecond(crds.x, crds.y, crds.z+0.15, "Jogador desconectou")
-                DrawText3D(crds.x, crds.y, crds.z, "ID: "..id.." ("..identifier..")\nMotivo: "..reason)
+                DrawText3D(crds.x, crds.y, crds.z, "ID: "..user_id..")\nMotivo: "..reason)
             else
                 Citizen.Wait(2000)
             end

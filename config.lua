@@ -8,3 +8,4 @@ Config.UseSteam = true -- If False then use R* License
 Config.LogBotName = "hope_logs"
 Config.AutoDisableDrawing = true
 Config.AutoDisableDrawingTime = 15000
+Config.Webhook = "WEBHOOK" -- Discord Webhook

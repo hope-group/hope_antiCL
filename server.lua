@@ -1,5 +1,10 @@
-local webhook = ""
+local Tunnel = module("vrp","lib/Tunnel")
+local Proxy = module("vrp","lib/Proxy")
+local Tools = module("vrp","lib/Tools")
+vRP = Proxy.getInterface("vRP")
+vRPclient = Tunnel.getInterface("vRP")
 
+local webhook = Config.Webhook
 
 
 RegisterCommand("combat", function(source, args, rawcmd)
@@ -9,25 +14,27 @@ end)
 AddEventHandler("playerDropped", function(reason)
     local crds = GetEntityCoords(GetPlayerPed(source))
     local id = source
+    local user_id = vRP.getUserId(source)
     local identifier = ""
     if Config.UseSteam then
         identifier = GetPlayerIdentifier(source, 0)
     else
         identifier = GetPlayerIdentifier(source, 1)
     end
-    TriggerClientEvent("hope_anticl", -1, id, crds, identifier, reason)
+    TriggerClientEvent("hope_anticl", -1, id, crds, identifier, reason, user_id)
     if Config.LogSystem then
-        SendLog(id, crds, identifier, reason)
+        SendLog(id, crds, identifier, reason, user_id)
     end
 end)
 
-function SendLog(id, crds, identifier, reason)
+function SendLog(id, crds, identifier, reason, user_id)
     local name = GetPlayerName(id)
     local date = os.date('*t')
     print("id:"..id)
     print("X: "..crds.x..", Y: "..crds.y..", Z: "..crds.z)
     print("identifier:"..identifier)
     print("reason:"..reason)
+    print("user_id:"..user_id)
     if date.month < 10 then date.month = '0' .. tostring(date.month) end
     if date.day < 10 then date.day = '0' .. tostring(date.day) end
     if date.hour < 10 then date.hour = '0' .. tostring(date.hour) end
@@ -50,7 +57,7 @@ function SendLog(id, crds, identifier, reason)
                     ["inline"] = true,
                 },{
                     ["name"] = "ID do jogador",
-                    ["value"] = id,
+                    ["value"] = user_id,
                     ["inline"] = true,
                 },{
                     ["name"] = "Coordenadas",
