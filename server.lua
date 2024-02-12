@@ -10,10 +10,7 @@ AddEventHandler("playerDropped", function(reason)
     local crds = GetEntityCoords(GetPlayerPed(source))
     local id = source
     local identifier = ""
-    if Config.UseSteam then
-        identifier = GetPlayerIdentifier(source, 0)
-    else
-        identifier = GetPlayerIdentifier(source, 1)
+    identifier = GetPlayerIdentifier(source, 1)
     end
     TriggerClientEvent("pixel_anticl", -1, id, crds, identifier, reason)
     if Config.LogSystem then
@@ -36,28 +33,28 @@ function SendLog(id, crds, identifier, reason)
     local date = (''..date.day .. '.' .. date.month .. '.' .. date.year .. ' - ' .. date.hour .. ':' .. date.min .. ':' .. date.sec..'')
     local embeds = {
         {
-            ["title"] = "Player Disconnected",
+            ["title"] = "Jogador desconectou",
             ["type"]="rich",
             ["color"] = 4777493,
             ["fields"] = {
                 {
-                    ["name"] = "Identifier",
+                    ["name"] = "Identificador",
                     ["value"] = identifier,
                     ["inline"] = true,
                 },{
-                    ["name"] = "Nickname",
+                    ["name"] = "Nome",
                     ["value"] = name,
                     ["inline"] = true,
                 },{
-                    ["name"] = "Player's ID",
+                    ["name"] = "ID do jogador",
                     ["value"] = id,
                     ["inline"] = true,
                 },{
-                    ["name"] = "Cordinates",
+                    ["name"] = "Coordenadas",
                     ["value"] = "X: "..crds.x..", Y: "..crds.y..", Z: "..crds.z,
                     ["inline"] = true,
                 },{
-                    ["name"] = "Reason",
+                    ["name"] = "Motivo",
                     ["value"] = reason,
                     ["inline"] = true,
                 },
