@@ -1,20 +1,35 @@
 local Tunnel = module("vrp","lib/Tunnel")
 local Proxy = module("vrp","lib/Proxy")
-local Tools = module("vrp","lib/Tools")
-vRP = Proxy.getInterface("vRP")
-vRPclient = Tunnel.getInterface("vRP")
 
-local webhook = Config.Webhook
+vRP = Proxy.getInterface("vRP")
+
+local webhook = ""
 
 
 RegisterCommand("combat", function(source, args, rawcmd)
     TriggerClientEvent("hope_antiCL:show", source)
 end)
 
+RegisterCommand("cltest", function(source, args, rawcmd)
+    local crds = GetEntityCoords(GetPlayerPed(source))
+    local id = source
+    local user_id = vRP.getUserId(id)
+    local identifier = ""
+    if Config.UseSteam then
+        identifier = GetPlayerIdentifier(source, 0)
+    else
+        identifier = GetPlayerIdentifier(source, 1)
+    end
+    TriggerClientEvent("hope_anticl", -1, id, crds, identifier, "Teste", user_id)
+    if Config.LogSystem then
+        SendLog(id, crds, identifier, "Teste", user_id)
+    end
+end)
+
 AddEventHandler("playerDropped", function(reason)
     local crds = GetEntityCoords(GetPlayerPed(source))
     local id = source
-    local user_id = vRP.getUserId(source)
+    local user_id = vRP.getUserId(id)
     local identifier = ""
     if Config.UseSteam then
         identifier = GetPlayerIdentifier(source, 0)
