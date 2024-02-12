@@ -3,16 +3,19 @@ local webhook = ""
 
 
 RegisterCommand("combat", function(source, args, rawcmd)
-    TriggerClientEvent("pixel_antiCL:show", source)
+    TriggerClientEvent("hope_antiCL:show", source)
 end)
 
 AddEventHandler("playerDropped", function(reason)
     local crds = GetEntityCoords(GetPlayerPed(source))
     local id = source
     local identifier = ""
-    identifier = GetPlayerIdentifier(source, 1)
+    if Config.UseSteam then
+        identifier = GetPlayerIdentifier(source, 0)
+    else
+        identifier = GetPlayerIdentifier(source, 1)
     end
-    TriggerClientEvent("pixel_anticl", -1, id, crds, identifier, reason)
+    TriggerClientEvent("hope_anticl", -1, id, crds, identifier, reason)
     if Config.LogSystem then
         SendLog(id, crds, identifier, reason)
     end

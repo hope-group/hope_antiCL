@@ -1,7 +1,7 @@
 local show3DText = false
 
-RegisterNetEvent("pixel_antiCL:show")
-AddEventHandler("pixel_antiCL:show", function()
+RegisterNetEvent("hope_antiCL:show")
+AddEventHandler("hope_antiCL:show", function()
     if show3DText then
         show3DText = false
     else
@@ -17,8 +17,8 @@ AddEventHandler("pixel_antiCL:show", function()
     end
 end)
 
-RegisterNetEvent("pixel_anticl")
-AddEventHandler("pixel_anticl", function(id, crds, identifier, reason)
+RegisterNetEvent("hope_anticl")
+AddEventHandler("hope_anticl", function(id, crds, identifier, reason)
     Display(id, crds, identifier, reason)
 end)
 
